@@ -1,7 +1,13 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
-from pydantic import BaseModel, HttpUrl
+from fastapi import FastAPI, File, UploadFile, HTTPException, Form
+from pydantic import BaseModel, HttpUrl, EmailStr, Field
 from app.utils.minio_utils import get_minio_client
 import logging
+from typing import Optional, List
+from app.models.user_model import UserRole
+import uuid
+
+
+
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -9,8 +15,9 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 class ProfilePictureResponse(BaseModel):
-    url: HttpUrl  # URL to the uploaded image
+    profile_picture_url: HttpUrl = Field(None, example="https://example.com/profiles/john.jpg")
     detail: str = "Profile picture uploaded successfully."
+
 
 @app.post("/upload-profile-picture/{user_id}", response_model=ProfilePictureResponse)
 async def upload_profile_picture(user_id: int, file: UploadFile = File(...)):
@@ -27,7 +34,7 @@ async def upload_profile_picture(user_id: int, file: UploadFile = File(...)):
         client.put_object(bucket_name="profile-pictures", object_name=file_path, data=file_content, length=len(file_content))
         pic_url = construct_public_url("profile-pictures", file_path)  # Assumes you have a method to construct the URL
         
-        return ProfilePictureResponse(url=pic_url)
+        return ProfilePictureResponse(profile_picture_url=pic_url)
     except Exception as e:
         logger.error(f"Failed to upload profile picture for user {user_id}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Upload error: {str(e)}")
