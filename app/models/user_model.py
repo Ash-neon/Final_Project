@@ -14,9 +14,10 @@ from typing import Optional
 from pydantic import BaseModel, HttpUrl
 from typing import Optional
 
+
 class UserProfile(BaseModel):
     username: str
-    profile_pic_url: Optional[HttpUrl] = None
+    profile_picture_url: HttpUrl = Field(None, example="https://example.com/profiles/john.jpg")
 
 class UserRole(Enum):
     """Enumeration of user roles within the application, stored as ENUM in the database."""
