@@ -110,8 +110,8 @@ class UserService:
         except ValidationError as e:
             logger.error(f"Validation error during user update: {e}")
             return None
-        except Exception as e:  # Catching a broad exception for any other issues
-            logger.error(f"Error during user update: {e}")
+        except SQLAlchemyError as e:
+            logger.error(f"SQLAlchemy error during user update: {e}")
             return None
 
     @classmethod

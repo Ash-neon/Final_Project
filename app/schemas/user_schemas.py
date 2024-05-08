@@ -7,6 +7,7 @@ from app.models.user_model import UserRole
 from app.utils.nickname_gen import generate_nickname
 
 
+
 def validate_url(url: Optional[str]) -> Optional[str]:
     if url is None:
         return url
@@ -14,6 +15,7 @@ def validate_url(url: Optional[str]) -> Optional[str]:
     if not re.match(url_regex, url):
         raise ValueError('Invalid URL format')
     return url
+
 
 class UserBase(BaseModel):
     email: EmailStr = Field(..., example="john.doe@example.com")

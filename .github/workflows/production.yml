@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - main
+      - Minio_Profile
+      - Profile-Pic-Upload-with-User-ID
   pull_request:
     branches:
       - main
+      - Minio_Profile
+      - Profile-Pic-Upload-with-User-ID
 
 jobs:
   test:
