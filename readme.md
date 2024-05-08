@@ -16,7 +16,7 @@ This project enhances user profile management by allowing users to upload and st
 - Docker
 - Python 3.8 or higher
 - FastAPI
-- Uvicorn
+- nginx
 
 ### Installation
 Clone the repository to your local machine:
